@@ -1,0 +1,23 @@
+
+# Test vectors
+add_executable(test_vector test_vector.c)
+target_link_libraries(test_vector solve)
+
+add_test(vector test_vector)
+
+# Test SAT solver
+add_executable(test_satsolver_cmsat test_sat.c)
+target_link_libraries(test_satsolver_cmsat sat_cryptominisat)
+add_test(satsolver_cmsat test_satsolver_cmsat)
+
+add_executable(test_satsolver_picosat test_sat.c)
+target_link_libraries(test_satsolver_picosat sat_picosat)
+add_test(satsolver_picosat test_satsolver_picosat)
+
+add_executable(test_satsolver_minisat test_sat.c)
+target_link_libraries(test_satsolver_minisat sat_minisat)
+add_test(satsolver_minisat test_satsolver_minisat)
+
+add_executable(test_satsolver_lingeling test_sat.c)
+target_link_libraries(test_satsolver_lingeling sat_lingeling)
+add_test(satsolver_lingeling test_satsolver_lingeling)
