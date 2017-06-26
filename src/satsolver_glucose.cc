@@ -1,5 +1,5 @@
 //
-//  satsolver_minisat.cc
+//  satsolver_glucose.cc
 //  caqe
 //
 //  Copyright (c) 2015 - 2016, Leander Tentrup, Saarland University
@@ -11,19 +11,21 @@ extern "C" {
 #include "satsolver.h"
 }
 
+#include <set>
+
 #include <assert.h>
 #include <stdbool.h>
-#include "minisat/core/Solver.h"
-#include "minisat/mtl/Vec.h"
-#include <map>
+#include "core/Solver.h"
+#include "mtl/Vec.h"
 
-using namespace Minisat;
+using namespace Glucose;
 using namespace std;
 
 struct SATSolver {
     Solver* instance;
     vec<Lit> clause;
     vec<Lit> assumptions;
+    std::set<Lit> conflict;
     bool last_sat_call;
 };
 
@@ -85,6 +87,12 @@ sat_res satsolver_sat(SATSolver* solver) {
     }
     sat_res res = solver->instance->solve(solver->assumptions) ? SATSOLVER_RESULT_SAT : SATSOLVER_RESULT_UNSAT;
     solver->last_sat_call = true;
+    if (res == SATSOLVER_RESULT_UNSAT) {
+        solver->conflict.clear();
+        for (int i = 0; i < solver->instance->conflict.size(); i++) {
+            solver->conflict.insert(solver->instance->conflict[i]);
+        }
+    }
     return res;
 }
 
@@ -102,8 +110,7 @@ int satsolver_value(SATSolver* solver, int lit) {
 }
 
 int satsolver_failed(SATSolver* solver, int lit) {
-    LSet& conflict = solver->instance->conflict;
-    return conflict.has(~lit_from_int(solver, lit));
+    return solver->conflict.find(~lit_from_int(solver, lit)) != solver->conflict.end();
 }
 
 void satsolver_print(SATSolver* solver) {
@@ -111,15 +118,15 @@ void satsolver_print(SATSolver* solver) {
 }
 
 const char* satsolver_get_name() {
-    return "MiniSat";
+    return "Glucose";
 }
 
 const char* satsolver_get_version() {
-    return "2.2.0";
+    return "4.1";
 }
 
 const char* satsolver_copyright() {
-    return "Copyright 2003 - 2006 Niklas Een, 2007 - 2012 Niklas Sorensson";
+    return "Copyright 2009-2014, Gilles Audemard, Laurent Simon";
 }
 
 

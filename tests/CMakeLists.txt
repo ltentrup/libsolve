@@ -21,3 +21,7 @@ add_test(satsolver_minisat test_satsolver_minisat)
 add_executable(test_satsolver_lingeling test_sat.c)
 target_link_libraries(test_satsolver_lingeling sat_lingeling)
 add_test(satsolver_lingeling test_satsolver_lingeling)
+
+add_executable(test_satsolver_glucose test_sat.c)
+target_link_libraries(test_satsolver_glucose sat_glucose)
+add_test(satsolver_glucose test_satsolver_glucose)

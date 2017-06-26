@@ -16,6 +16,8 @@ add_library(sat_lingeling STATIC satsolver_lingeling.c)
 target_link_libraries(sat_lingeling lingeling)
 target_link_libraries(sat_lingeling m)
 
+add_library(sat_glucose STATIC satsolver_glucose.cc)
+target_link_libraries(sat_glucose glucose)
 
 # External Projects
 
@@ -90,3 +92,20 @@ add_library(lingeling STATIC IMPORTED)
 set_property(TARGET lingeling PROPERTY IMPORTED_LOCATION ${binary_dir}/liblgl.a)
 add_dependencies(lingeling lingeling-src)
 include_directories(${binary_dir})
+
+# glucose
+ExternalProject_Add(glucose-src
+    URL http://www.labri.fr/perso/lsimon/downloads/softwares/glucose-syrup-4.1.tgz
+	CONFIGURE_COMMAND echo
+	BINARY_DIR glucose-src-prefix/src/glucose-src/simp/
+    BUILD_COMMAND make libr
+	#BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
+)
+
+ExternalProject_Get_Property(glucose-src binary_dir)
+
+add_library(glucose STATIC IMPORTED)
+set_property(TARGET glucose PROPERTY IMPORTED_LOCATION ${binary_dir}/lib.a)
+add_dependencies(glucose glucose-src)
+include_directories(${binary_dir}/..)
