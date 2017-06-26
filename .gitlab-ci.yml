@@ -1,0 +1,27 @@
+# use the official ubuntu image
+image: ubuntu
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq build-essential clang cmake git vim-common zlib1g-dev
+
+build:
+  stage: build
+  script: 
+    - mkdir -p build
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - make
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - build/
+  cache:
+    paths:
+      - build/
+
+# run tests using the binary built before
+test:
+  stage: test
+  script:
+    - cd build
+    - make test
