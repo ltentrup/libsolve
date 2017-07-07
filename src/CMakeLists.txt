@@ -1,5 +1,5 @@
 
-add_library(solve STATIC vector.c vector.h)
+add_library(solve STATIC bit_vector.c bit_vector.h map.c map.h queue.c queue.h vector.c vector.h)
 
 add_library(sat_cryptominisat STATIC satsolver_cryptominisat.cc)
 target_link_libraries(sat_cryptominisat cryptominisat5)
