@@ -28,7 +28,7 @@ include(ExternalProject)
 ExternalProject_Add(cmsat
     GIT_REPOSITORY https://github.com/msoos/cryptominisat.git
     CMAKE_GENERATOR "Unix Makefiles"
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=Release -DSTATICCOMPILE=ON
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=Release -DSTATICCOMPILE=ON -DNOM4RI=ON
     BUILD_COMMAND make libcryptominisat5 CopyPublicHeaders
     INSTALL_COMMAND ""
     UPDATE_DISCONNECTED 1
