@@ -32,6 +32,7 @@ ExternalProject_Add(cmsat
     BUILD_COMMAND make libcryptominisat5 CopyPublicHeaders
     INSTALL_COMMAND ""
     UPDATE_DISCONNECTED 1
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(cmsat binary_dir)
@@ -49,6 +50,7 @@ ExternalProject_Add(picosat-src
     BUILD_COMMAND make libpicosat.a
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(picosat-src binary_dir)
@@ -67,6 +69,7 @@ ExternalProject_Add(minisat-src
     BUILD_COMMAND make minisat-lib-static
     INSTALL_COMMAND ""
     UPDATE_DISCONNECTED 1
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(minisat-src binary_dir)
@@ -85,6 +88,7 @@ ExternalProject_Add(lingeling-src
     BUILD_COMMAND make liblgl.a
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(lingeling-src binary_dir)
@@ -100,8 +104,9 @@ ExternalProject_Add(glucose-src
     CONFIGURE_COMMAND echo  # force non-cmake build
     BINARY_DIR glucose-src-prefix/src/glucose-src/simp/
     BUILD_COMMAND make libr
-	#BUILD_IN_SOURCE 1
+    #BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(glucose-src binary_dir)
