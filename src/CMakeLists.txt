@@ -1,5 +1,5 @@
 
-add_library(solve STATIC vector.c vector.h)
+add_library(solve STATIC bit_vector.c bit_vector.h map.c map.h queue.c queue.h vector.c vector.h)
 
 add_library(sat_cryptominisat STATIC satsolver_cryptominisat.cc)
 target_link_libraries(sat_cryptominisat cryptominisat5)
@@ -29,10 +29,11 @@ ExternalProject_Add(cmsat
     GIT_REPOSITORY https://github.com/msoos/cryptominisat.git
     GIT_TAG 5.6.8
 	CMAKE_GENERATOR "Unix Makefiles"
-    CMAKE_ARGS "-DSTATICCOMPILE=ON"
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=Release -DSTATICCOMPILE=ON -DNOM4RI=ON
     BUILD_COMMAND make
     INSTALL_COMMAND ""
     UPDATE_DISCONNECTED 1
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(cmsat binary_dir)
@@ -46,10 +47,11 @@ include_directories(${binary_dir}/include)
 # picosat
 ExternalProject_Add(picosat-src
     URL http://fmv.jku.at/picosat/picosat-965.tar.gz
-	CONFIGURE_COMMAND ./configure.sh
+    CONFIGURE_COMMAND ./configure.sh
     BUILD_COMMAND make libpicosat.a
-	BUILD_IN_SOURCE 1
+    BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(picosat-src binary_dir)
@@ -63,10 +65,12 @@ include_directories(${binary_dir})
 # minisat
 ExternalProject_Add(minisat-src
     GIT_REPOSITORY https://github.com/stp/minisat.git
-	CMAKE_GENERATOR "Unix Makefiles"
+    CMAKE_GENERATOR "Unix Makefiles"
+    CMAKE_ARGS "-DCMAKE_BUILD_TYPE=Release"
     BUILD_COMMAND make minisat-lib-static
     INSTALL_COMMAND ""
-	UPDATE_DISCONNECTED 1
+    UPDATE_DISCONNECTED 1
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(minisat-src binary_dir)
@@ -81,10 +85,11 @@ include_directories(${source_dir})
 # lingeling
 ExternalProject_Add(lingeling-src
     URL http://fmv.jku.at/lingeling/lingeling-bbc-9230380-160707.tar.gz
-	CONFIGURE_COMMAND ./configure.sh
+    CONFIGURE_COMMAND ./configure.sh
     BUILD_COMMAND make liblgl.a
-	BUILD_IN_SOURCE 1
+    BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(lingeling-src binary_dir)
@@ -97,11 +102,12 @@ include_directories(${binary_dir})
 # glucose
 ExternalProject_Add(glucose-src
     URL http://www.labri.fr/perso/lsimon/downloads/softwares/glucose-syrup-4.1.tgz
-	CONFIGURE_COMMAND echo
-	BINARY_DIR glucose-src-prefix/src/glucose-src/simp/
+    CONFIGURE_COMMAND echo  # force non-cmake build
+    BINARY_DIR glucose-src-prefix/src/glucose-src/simp/
     BUILD_COMMAND make libr
-	#BUILD_IN_SOURCE 1
+    #BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""
+    EXCLUDE_FROM_ALL 1
 )
 
 ExternalProject_Get_Property(glucose-src binary_dir)
