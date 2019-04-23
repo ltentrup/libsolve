@@ -27,9 +27,10 @@ include(ExternalProject)
 # cryptominisat
 ExternalProject_Add(cmsat
     GIT_REPOSITORY https://github.com/msoos/cryptominisat.git
+    GIT_TAG 5.6.8
 	CMAKE_GENERATOR "Unix Makefiles"
     CMAKE_ARGS "-DSTATICCOMPILE=ON"
-    BUILD_COMMAND make libcryptominisat5 CopyPublicHeaders
+    BUILD_COMMAND make
     INSTALL_COMMAND ""
     UPDATE_DISCONNECTED 1
 )
