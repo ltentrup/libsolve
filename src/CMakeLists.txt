@@ -66,7 +66,7 @@ include_directories(${binary_dir})
 ExternalProject_Add(minisat-src
     GIT_REPOSITORY https://github.com/stp/minisat.git
     CMAKE_GENERATOR "Unix Makefiles"
-    CMAKE_ARGS "-DCMAKE_BUILD_TYPE=Release -STATICCOMPILE=ON"
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=Release -DSTATICCOMPILE=ON
     BUILD_COMMAND make minisat
     INSTALL_COMMAND ""
     UPDATE_DISCONNECTED 1
