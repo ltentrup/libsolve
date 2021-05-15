@@ -27,7 +27,7 @@ include(ExternalProject)
 # cryptominisat
 ExternalProject_Add(cmsat
     GIT_REPOSITORY https://github.com/msoos/cryptominisat.git
-    GIT_TAG 5.6.8
+    GIT_TAG 5.7.0
 	CMAKE_GENERATOR "Unix Makefiles"
     CMAKE_ARGS -DCMAKE_BUILD_TYPE=Release -DSTATICCOMPILE=ON -DNOM4RI=ON
     BUILD_COMMAND make
